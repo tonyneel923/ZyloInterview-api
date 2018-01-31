@@ -1,0 +1,12 @@
+{
+  "name": "ZyloInterview-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "Tony Neel",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "express": "^4.16.2",
+    "fs": "^0.0.1-security"
+  }
+}
