@@ -7,6 +7,12 @@ var utils = require('./utils');
 
 // needed to handle json body in request
 app.use(express.json());
+// needed for cors
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // caught /stocks/ because it felt more elegant than just return html get Error
 // which is default for express when request is not handled by any endpoint
@@ -24,7 +30,7 @@ app.get(['/stocks/:stockSymbol', '/stocks/'],  async(req, res) => {
     const error = data["Error Message"];
     if (error) return res.status(400).send({ error: 'Please Enter Correct Stock Symbol' });
 
-    return res.send(data);
+    return res.send(data["Time Series (Daily)"]);
   } catch (error) {
     // api service always responds with 200
     // even when unsuccesful
@@ -49,7 +55,7 @@ app.get('/favorites', async(req, res) => {
     const error = data["Error Message"];
     if (error) return res.status(404).send({ error: 'You have no favorites saved' });
 
-    return res.send(data);
+    return res.send(data["Stock Quotes"]);
   } catch (error) {
     console.log(error);
     return res.status(500).send({ error: 'Oops! Something went wrong. Please try again.' });
